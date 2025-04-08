@@ -7,8 +7,8 @@
 
 class Not_found_exception : Exception {
 public:
-    Not_found_exception() : Exception("Not Found"){};
-    Not_found_exception(std::string message) : Exception("Not Found: " + message){};
+    Not_found_exception() : Exception("Item Not Found"){};
+    Not_found_exception(std::string message) : Exception("Item Not Founod: " + message){};
 };
 
 #endif
