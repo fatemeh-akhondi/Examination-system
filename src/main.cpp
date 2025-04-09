@@ -25,11 +25,9 @@ using json = nlohmann::json;
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
 template <typename T>
-class Trackable_object {
+class Instance_manager {
 public:
-    static unordered_set <T*> instance_list;
-
-    Trackable_object() {
+    Instance_manager() {
         instance_list.insert(static_cast<T*>(this));
     }
 
@@ -43,9 +41,11 @@ public:
         }
     }
 
-    ~Trackable_object() {
+    ~Instance_manager() {
         instance_list.erase(static_cast<T*>(this));
     }
+private:
+    static unordered_set <T*> instance_list;
 };
 
 namespace Tools {
@@ -84,12 +84,8 @@ namespace Tools {
 
 
 
-class Question: public Trackable_object<Question> {
+class Question: public Instance_manager<Question> {
 public:
-    string text;
-    string answer;
-    int id;
-
     Question(string text, string answer, int positive_mark):
      text(text), answer(answer), positive_mark(positive_mark) {
         this->id = ++instance_count;
@@ -98,6 +94,12 @@ public:
     int get_positive_mark() const { return positive_mark; }
 
     int get_negative_mark() const { return negative_mark; }
+
+    string get_text() { return text; }
+
+    string get_answer() { return answer; }
+
+    int get_id() { return id; }
 
     virtual void print_question() = 0;
 
@@ -112,6 +114,9 @@ public:
         return j;
     }
 protected:
+    string text;
+    string answer;
+    int id;
     int positive_mark;
     int negative_mark = 0;
 private:
@@ -264,7 +269,7 @@ struct Question_response {
     string answer;
 };
 //TODO using questionid = int
-class Exam_response : public Trackable_object<Exam_response> {
+class Exam_response: public Instance_manager<Exam_response> {
 public:
     vector <Question_response> question_responses;
 
@@ -293,7 +298,7 @@ public:
             if (typeid(*response.question) == typeid(Long_answer))
                 continue;
 
-            string correct_answer = response.question->answer;
+            string correct_answer = response.question->get_answer();
             string user_answer = response.answer;
             if (correct_answer == user_answer) {
                 achieved_points += response.question->get_positive_mark();
@@ -322,7 +327,7 @@ private:
     int id;
 };
 
-class Exam: public Trackable_object<Exam> {
+class Exam: public Instance_manager<Exam> {
 public:
     Exam(string name, int time_limit): name(name), time_limit(time_limit) { 
         id = generate_unique_code();
@@ -358,7 +363,7 @@ public:
 
         int index = -1;
         for (int i = 0; i < questions.size(); i++) {
-            if (questions[i]->id == question_id)
+            if (questions[i]->get_id() == question_id)
                 index = i;
         }
         if (index == -1)
@@ -374,7 +379,7 @@ public:
 
         for (auto question : this->questions) {
             question->print_question();
-            cout << question->answer << endl;
+            cout << question->get_answer() << endl;
         }
     }
 
@@ -564,7 +569,7 @@ protected:
     string password;
 };
        
-class Professor: public Member, public Trackable_object<Professor>{
+class Professor: public Member, public Instance_manager<Professor>{
 public:
     Professor(string name, string id, vector <string> course_list, string password): Member(name, id, password), course_list(course_list){
         id_to_pointer[id] = this;
@@ -696,7 +701,7 @@ private:
         Question* question = question_creator.create_question();  
 
         current_exam->add_question(question);
-        cout << "adding successful! question id is: " << question->id << endl;
+        cout << "adding successful! question id is: " << question->get_id() << endl;
     }
 
     void show_remove_question_page(Exam* current_exam) {
@@ -755,7 +760,7 @@ private:
         for (auto question : exam->get_questions()) {
             cout << "statement: ";
             question->print_question();
-            cout << "answer: " << question->answer << endl;
+            cout << "answer: " << question->get_answer() << endl;
             cout << endl;
         }
     }
@@ -777,7 +782,7 @@ private:
 };  
 
 //TODO using examid int
-class Student: public Member, public Trackable_object<Student>{
+class Student: public Member, public Instance_manager<Student>{
 public:
     Student(string name, string id, string study_field, string password): Member(name, id, password), study_field(study_field){
         id_to_pointer[id] = this;
@@ -1080,7 +1085,7 @@ private:
 unordered_map <int, Exam*> Exam::id_to_exam;
 int Question::instance_count = 0;
 template <typename T>
-unordered_set <T*> Trackable_object<T>::instance_list;
+unordered_set <T*> Instance_manager<T>::instance_list;
 unordered_map <string, Professor*> Professor::id_to_pointer;
 unordered_map <string, Student*> Student::id_to_pointer;
 unordered_map <string, Exam_response*> Exam_response::id_to_pointer;
@@ -1092,37 +1097,4 @@ int main() {
     // freopen("in.txt", "r", stdin);
     Authentication_CLI *command_line_interface = new Authentication_CLI();
     command_line_interface->show_main_page();
-
-    ofstream file("professor.json", ios::app); //to append data at end of last file
-
-    for (auto i : Trackable_object<Professor>::instance_list) {
-        file << i->to_json().dump(4) << endl;
-    }
-
-    file.close();
-
-    ofstream fff("student.json", ios::app); //to append data at end of last file
-
-    for (auto i : Trackable_object<Student>::instance_list) {
-        fff << i->to_json().dump(4) << endl;
-    }
-
-    fff.close();
-
-    ofstream f("exam.json", ios::app); //to append data at end of last file
-
-    for (auto i : Trackable_object<Exam>::instance_list) {
-        f << i->to_json().dump(4) << endl;
-    }
-
-    f.close();
-
-    ofstream ff("exam_response.json", ios::app); //to append data at end of last file
-
-    for (auto i : Trackable_object<Exam_response>::instance_list) {
-        ff << i->to_json().dump(4) << endl;
-    }
-
-    ff.close();
-
 }

@@ -14,7 +14,7 @@ void Data_exporter::save_data(const std::string& file_path) {
         file << j.dump(4) << std::endl;
     }
 
-    for (const auto& i : Trackable_object<T>::instance_list) {
+    for (const auto& i : Instance_manager<T>::instance_list) {
         file << i->to_json().dump(4) << std::endl;
     }
 
