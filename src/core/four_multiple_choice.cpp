@@ -1,13 +1,24 @@
 #include "four_multiple_choice.hpp"
+#include "constants.hpp"
+#include "../utils/tools.hpp"
 #include <iostream>
 #include <algorithm>
 #include <random>
+#include <chrono>
 
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 using namespace std;
 
 Four_multiple_choice::Four_multiple_choice(string text, string answer, int positive_mark,
-    int negative_mark, string opstions[4]): Question(text, answer, positive_mark) {
+    int negative_mark, string opstions[4]): Question(text, answer, positive_mark, question_types::FMC) {
+       this->negative_mark = negative_mark;
+
+       for (int i = 0; i < 4; i++) {
+           this->options[i] = opstions[i];
+       }
+}
+
+Four_multiple_choice::Four_multiple_choice(int id, string text, string answer, int positive_mark,
+    int negative_mark, string opstions[4]): Question(id, text, answer, positive_mark, question_types::FMC) {
        this->negative_mark = negative_mark;
 
        for (int i = 0; i < 4; i++) {
@@ -48,4 +59,17 @@ json Four_multiple_choice::to_json() {
    }
 
    return j;
+}
+
+void Four_multiple_choice::from_json(json& j) {
+    std::string text = j["text"];
+    std::string answer = j["answer"];
+    int id = j["id"].get<int>();
+    int positive_mark = j["positive_mark"].get<int>();
+    int negative_mark = j["negative_mark"].get<int>();
+    string options[4];
+    for (int i = 0; i < 4; i++) {
+        options[i] = j["options"][i];
+    }
+    new Four_multiple_choice(id, text, answer, positive_mark, negative_mark, options);
 }

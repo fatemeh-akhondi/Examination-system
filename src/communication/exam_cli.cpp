@@ -44,7 +44,7 @@ Exam_response* Exam_CLI::process_exam_input(string submitter_id, Exam* current_e
         question_responses[index].answer = input;
 
         index++;
-        if (index == question_responses.size()) {
+        if (index == (int) question_responses.size()) {
             cout << "You have reached the last question. Do you want to submit? ('yes' to submit, 'no' to review)" << endl;
             getline(cin, input);
             if (input == "yes") break; 

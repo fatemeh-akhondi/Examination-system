@@ -5,7 +5,7 @@
 
 #include "exception.hpp"
 
-class Invalid_input_exception : Exception {
+class Invalid_input_exception :public Exception {
 public:
     Invalid_input_exception() : Exception("Invalid Input"){};
     Invalid_input_exception(std::string message) : Exception("Invalid Input: " + message){};

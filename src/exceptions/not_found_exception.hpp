@@ -5,10 +5,10 @@
 
 #include "exception.hpp"
 
-class Not_found_exception : Exception {
+class Not_found_exception :public Exception {
 public:
     Not_found_exception() : Exception("Item Not Found"){};
-    Not_found_exception(std::string message) : Exception("Item Not Founod: " + message){};
+    Not_found_exception(std::string message) : Exception("Item Not Found: " + message){};
 };
 
 #endif

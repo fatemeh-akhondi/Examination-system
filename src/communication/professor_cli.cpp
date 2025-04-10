@@ -76,17 +76,22 @@ void Professor_CLI::show_question_modification_page(Exam* current_exam) {
             show_remove_question_page(current_exam);
         }
         else {
-            throw Invalid_input_exception();
+            cout << "Invalid Input" << endl;
+            continue;
         }
     }
 }
 
 void Professor_CLI::show_add_question_page(Exam* current_exam) {
-    Question_creator question_creator;
-    Question* question = question_creator.create_question();  
-
-    current_exam->add_question(question);
-    cout << "adding successful! question id is: " << question->get_id() << endl;
+    try {
+        Question_creator question_creator;
+        Question* question = question_creator.create_question(); 
+        current_exam->add_question(question);
+        cout << "adding successful! question id is: " << question->get_id() << endl;
+    }
+    catch (Exception &e) {
+        cout << e.get_message() << endl;
+    }
 }
 
 void Professor_CLI::show_remove_question_page(Exam* current_exam) {
@@ -108,8 +113,9 @@ int Professor_CLI::show_exam_view_page() {
         return 0;
     }
     cout << "exam id's are: ";
-    for (auto current_exam : current_professor->get_exams())
+    for (auto current_exam : current_professor->get_exams()) {
         cout << current_exam->get_id() << " ";
+    }
     cout << endl;
     
     while (true) {
@@ -121,8 +127,12 @@ int Professor_CLI::show_exam_view_page() {
         if (command == "back") {
             return 0;
         }
-        if (command == "logout") { //TODO throw
+        else if (command == "logout") { //TODO throw
             return -1;
+        }
+        else if (!Tools::is_number(command)) {
+            cout << "Invalid input" << endl;
+            continue;
         }
         
         int requested_exam_code = stoi(command);
@@ -140,7 +150,8 @@ void Professor_CLI::print_exam(int id) {
 
     Exam* exam = Exam::get_exam(id);
 
-    cout << exam->get_name() << ":" << endl;
+    cout << "Exam name: " << exam->get_name() << endl;
+    cout << "Questions: " << endl;
 
     for (auto question : exam->get_questions()) {
         cout << "statement: ";

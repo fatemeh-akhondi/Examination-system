@@ -15,6 +15,8 @@ using namespace std;
 class Exam: public Instance_manager<Exam> {
 public:
     Exam(string name, int time_limit);
+    Exam(string name, int time_limit, int id,
+         vector <Question*> questions, vector <Exam_response*> responses);
 
     
     int get_unique_code() {  return id; }
@@ -31,13 +33,14 @@ public:
     void prepare_questions();
 
     json to_json();
+    static void from_json(json &j);
 private:
-    static unordered_map <int, Exam*> id_to_exam;
-    vector <Question*> questions;
-    vector <Exam_response> responses;
+    static unordered_map <int, Exam*> id_to_pointer;
     string name;
     int time_limit;
     int id;
+    vector <Question*> questions;
+    vector <Exam_response*> responses;
 
     int generate_unique_code();
 };

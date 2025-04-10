@@ -2,26 +2,35 @@
 #include <iostream>
 #include <algorithm>
 #include <random>
+#include <chrono>
 #include <typeinfo>
 #include "../exceptions/not_found_exception.hpp"
+#include "../utils/tools.hpp"
 #include "long_answer.hpp"
 #include "short_answer.hpp"
 #include "four_multiple_choice.hpp"
 #include "constants.hpp"
 
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+#include <iostream>
 
-std::unordered_map<int, Exam*> Exam::id_to_exam;
+std::unordered_map<int, Exam*> Exam::id_to_pointer;
 
 Exam::Exam(string name, int time_limit): name(name), time_limit(time_limit) { 
     id = generate_unique_code();
 
-    id_to_exam[id] = this;
+    id_to_pointer[id] = this;
 }
+
+Exam::Exam(string name, int time_limit, int id,
+     vector <Question*> questions, vector <Exam_response*> responses):
+        name(name), time_limit(time_limit), id(id), questions(questions), responses(responses) {
+    id_to_pointer[id] = this;
+}
+
 
 int Exam::generate_unique_code() {
     int code = rng() % big_number;
-    while (!id_to_exam.empty() && id_to_exam.find(code) != id_to_exam.end()) {
+    while (!id_to_pointer.empty() && id_to_pointer.find(code) != id_to_pointer.end()) {
         code = rng() % big_number;
     }
 
@@ -29,9 +38,9 @@ int Exam::generate_unique_code() {
 }
 
 Exam* Exam::get_exam(int id) {
-    if (id_to_exam.empty() || id_to_exam.find(id) == id_to_exam.end())
+    if (id_to_pointer.empty() || id_to_pointer.find(id) == id_to_pointer.end())
         return nullptr;
-    return id_to_exam[id];
+    return id_to_pointer[id];
 }
 
 void Exam::add_question(Question* new_question) {
@@ -43,7 +52,7 @@ void Exam::remove_question(int question_id) {
         throw Not_found_exception("questions list is empty!");
 
     int index = -1;
-    for (int i = 0; i < questions.size(); i++) {
+    for (int i = 0; i < (int) questions.size(); i++) {
         if (questions[i]->get_id() == question_id)
             index = i;
     }
@@ -93,11 +102,31 @@ json Exam::to_json() {
     json j;
     j["name"] = name;
     j["id"] = id;
-    j["time-limit"] = time_limit;
-    j["Questions"] = json::array();
+    j["time_limit"] = time_limit;
+    j["questions"] = json::array();
     for (auto q : questions) {
-        j["Questions"].push_back(q->to_json());
+        j["questions"].push_back(q->get_id());
+    }
+    j["responses"] = json::array();
+    for (auto response : responses) {
+        j["responses"].push_back(response->get_id());
     }
 
     return j;
+}
+
+void Exam::from_json(json &j) {
+    vector <Question*> questions(0);
+    for (auto item : j["questions"]) {
+        Question* ptr = Question::get_question(item.get<int>());
+        questions.push_back(ptr);
+    }
+
+    vector <Exam_response*> responses(0);
+    for (auto item : j["responses"]) {
+        Exam_response* ptr = Exam_response::get_exam_response(item);
+        responses.push_back(ptr);
+    }
+
+    new Exam(j["name"], j["time_limit"].get<int>(), j["id"].get<int>(), questions, responses);
 }

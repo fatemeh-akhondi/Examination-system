@@ -1,8 +1,13 @@
 #include "professor.hpp"
 
+#include <iostream>
+
 unordered_map <string, Professor*> Professor::id_to_pointer;
 
 Professor::Professor(string name, string id, vector <string> course_list, string password): Member(name, id, password), course_list(course_list){
+    id_to_pointer[id] = this;
+}
+Professor::Professor(string name, string id, vector <string> course_list, string password, vector <Exam*> exams): Member(name, id, password), course_list(course_list), exams(exams){
     id_to_pointer[id] = this;
 }
 
@@ -34,4 +39,14 @@ json Professor::to_json() {
     }
 
     return j;
+}
+
+void Professor::from_json(json &j) {
+    vector <string> course_list = j["course_list"].get<vector<string>>();
+    vector <Exam*> exams;
+    for (auto item : j["exams"]) {
+        exams.push_back(Exam::get_exam(item.get<int>()));
+    }
+
+    new Professor(j["name"], j["id"], course_list, j["password"], exams); 
 }

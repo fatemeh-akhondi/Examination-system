@@ -1,13 +1,37 @@
-{
-    "exam_responses": [
-        1
-    ],
-    "exams": [
-        58656809,
-        58656809
-    ],
-    "id": "s",
-    "name": "s",
-    "password": "s",
-    "study_field": "s"
-}
+[
+    {
+        "exam_responses": [
+            4
+        ],
+        "exams": [
+            481166140
+        ],
+        "id": "s1",
+        "name": "fateme",
+        "password": "12",
+        "study_field": "cs"
+    },
+    {
+        "exam_responses": [
+            1,
+            2,
+            3
+        ],
+        "exams": [
+            186918893,
+            481166140
+        ],
+        "id": "1",
+        "name": "s",
+        "password": "1",
+        "study_field": "bio"
+    },
+    {
+        "exam_responses": [],
+        "exams": [],
+        "id": "p",
+        "name": "p",
+        "password": "p",
+        "study_field": "p"
+    }
+]

@@ -1,5 +1,70 @@
-{
-    "exam": 58656809,
-    "id": 1,
-    "score": 0.0
-}
+[
+    {
+        "id": 4,
+        "question_responses": [
+            [
+                6,
+                ""
+            ],
+            [
+                5,
+                "3.14"
+            ],
+            [
+                3,
+                ""
+            ],
+            [
+                4,
+                ""
+            ]
+        ],
+        "score": 0.0,
+        "submitter_id": "s1"
+    },
+    {
+        "id": 1,
+        "question_responses": [
+            [
+                1,
+                "1"
+            ]
+        ],
+        "score": 0.0,
+        "submitter_id": "1"
+    },
+    {
+        "id": 3,
+        "question_responses": [
+            [
+                6,
+                "3"
+            ],
+            [
+                5,
+                "3.14"
+            ],
+            [
+                3,
+                "i don't know"
+            ],
+            [
+                4,
+                "all"
+            ]
+        ],
+        "score": 0.0,
+        "submitter_id": "1"
+    },
+    {
+        "id": 2,
+        "question_responses": [
+            [
+                1,
+                ""
+            ]
+        ],
+        "score": 0.0,
+        "submitter_id": "1"
+    }
+]

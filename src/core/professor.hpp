@@ -12,21 +12,21 @@
 class Professor: public Member, public Instance_manager<Professor>{
 public:
     Professor(string name, string id, vector <string> course_list, string password);
+    Professor(string name, string id, vector <string> course_list, string password, vector <Exam*> exams);
 
-    vector <Exam*> & get_exams() { return exams; }
+    vector <Exam*> get_exams() { return exams; }
 
     void add_exam(Exam *exam);
 
     static Professor* get_professor(string id);
-
     bool has_exam(int id);
-
     json to_json();
+    static void from_json(json &j);
 
 private:
     static unordered_map <string, Professor*> id_to_pointer;
-    vector <Exam*> exams;
     vector <string> course_list;
+    vector <Exam*> exams;
 };
 
 #endif

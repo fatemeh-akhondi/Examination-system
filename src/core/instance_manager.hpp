@@ -7,10 +7,13 @@ template <typename T>
 class Instance_manager {
 public:
     Instance_manager();
+
+    static std::unordered_set <T*> get_instance_list() { return instance_list; }
+
     static void delete_all();
     ~Instance_manager();
 private:
-    static unordered_set <T*> instance_list;
+    static std::unordered_set <T*> instance_list;
 };
 
 #endif

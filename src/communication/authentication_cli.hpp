@@ -4,7 +4,7 @@
 #include "../core/student.hpp"
 #include "../core/professor.hpp"
 #include "student_cli.hpp"
-#include "../core/professor_cli.hpp"
+#include "professor_cli.hpp"
 #include "../utils/tools.hpp"
 #include <string>
 

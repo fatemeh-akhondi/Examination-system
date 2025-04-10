@@ -32,8 +32,11 @@ void Authentication_CLI::execute_command(string command) {
     if (command == "login") {
         handle_login();
     }
-    if (command == "signup") {
+    else if (command == "signup") {
         handle_signup();
+    }
+    else {
+        cout << "Invalid command" << endl;
     }
 }
 
@@ -64,11 +67,11 @@ void Authentication_CLI::validate_login_data(string role, string id, string pass
         throw Exception("invalid role");
     }
     if ((role == "professor" && Professor::get_professor(id) == nullptr) || 
-            role == "student" && Student::get_student(id) == nullptr) {
+            (role == "student" && Student::get_student(id) == nullptr)) {
         throw Exception("such id does not exist");
     }
     if ((role == "professor" && Professor::get_professor(id)->get_password() != password) || 
-            role == "student" && Student::get_student(id)->get_password() != password) {
+            (role == "student" && Student::get_student(id)->get_password() != password)) {
         throw Exception("id and password don't match");
     }
 
