@@ -1,0 +1,23 @@
+statement: choose best option.
+1: most good
+2: blue
+3: spring
+4: dog
+Positive mark: 2 / Negative mark: 1
+your answer: 1
+correct answer: 1
+score from this question: 2
+
+statement: what is pi number?
+Positive mark: 2 / Negative mark: 1
+your answer: 3.14
+correct answer: 3.14
+score from this question: 2
+
+statement: what are oop principals
+Positive mark: 2
+your answer: 
+correct answer: polymorphism abstraction encapsulation
+score from this question: 2
+
+total score: 20

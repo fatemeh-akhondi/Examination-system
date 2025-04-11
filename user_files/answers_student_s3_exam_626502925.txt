@@ -1,0 +1,17 @@
+statement: ook
+1: ko
+2: koo
+3: ko ko
+4: oko
+Positive mark: 3 / Negative mark: 1
+your answer: 2
+correct answer: 2
+score from this question: 3
+
+statement: hi
+Positive mark: 2
+your answer: what?
+correct answer: hello
+score from this question: 0
+
+total score: 12

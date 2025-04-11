@@ -18,6 +18,7 @@ private:
     void add_exam_page();
     void handle_view();
     void participate_page();
+    void get_results();
 };
 
 #endif // STUDENT_CLI_HPP

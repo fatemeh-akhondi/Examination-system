@@ -21,6 +21,7 @@ public:
     
     int get_unique_code() {  return id; }
     vector <Question*> get_questions() { return questions; }
+    vector <Exam_response*> get_exam_responses() { return responses; }
     int get_id() { return id; }
     int get_time_limit() { return time_limit; }
     string get_name() { return name; }
@@ -28,9 +29,14 @@ public:
     static Exam* get_exam(int id);
 
     void add_question(Question* new_question);
+    void add_question_response(Exam_response* response);
     void remove_question(int question_id);
-    void print_exam();
+    float calculate_average();
+    float get_maximum_score();
+    bool has_LA_question();
     void prepare_questions();
+    void print_exam();
+    void get_ranking_csv(string file_path);
 
     json to_json();
     static void from_json(json &j);

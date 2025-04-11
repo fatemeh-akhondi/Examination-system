@@ -1,0 +1,69 @@
+[
+    {
+        "answer": "d",
+        "id": 2,
+        "is_graded": false,
+        "negative_mark": 0,
+        "positive_mark": 2,
+        "text": "d",
+        "type": "long-answer"
+    },
+    {
+        "answer": "3.14",
+        "id": 5,
+        "negative_mark": 1,
+        "positive_mark": 2,
+        "text": "what is pi number?",
+        "type": "short-answer"
+    },
+    {
+        "answer": "d",
+        "id": 1,
+        "is_graded": false,
+        "negative_mark": 0,
+        "positive_mark": 2,
+        "text": "d",
+        "type": "long-answer"
+    },
+    {
+        "answer": "encapsulation abstraction polymorphism",
+        "id": 3,
+        "is_graded": false,
+        "negative_mark": 0,
+        "positive_mark": 2,
+        "text": "what are oop pricipals?",
+        "type": "long-answer"
+    },
+    {
+        "answer": "all colors",
+        "id": 4,
+        "is_graded": false,
+        "negative_mark": 0,
+        "positive_mark": 2,
+        "text": "which color is the best?",
+        "type": "long-answer"
+    },
+    {
+        "answer": "3",
+        "id": 6,
+        "negative_mark": 1,
+        "options": [
+            "tre",
+            "sprin",
+            "bottle",
+            "pe"
+        ],
+        "positive_mark": 2,
+        "text": "choose!",
+        "type": "four-multiple-choice"
+    },
+    {
+        "answer": "1",
+        "id": 7,
+        "is_graded": false,
+        "negative_mark": 0,
+        "positive_mark": 2,
+        "text": "which color is the best",
+        "type": "long-answer"
+    }
+]

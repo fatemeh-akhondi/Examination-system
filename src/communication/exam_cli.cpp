@@ -26,7 +26,7 @@ Exam_response* Exam_CLI::hold_exam(string submitter_id) {
 Exam_response* Exam_CLI::process_exam_input(string submitter_id, Exam* current_exam, time_t start_time) {
     current_exam->prepare_questions();
 
-    Exam_response *exam_response = new Exam_response(submitter_id, current_exam->get_questions());//TODO maybe edit
+    Exam_response *exam_response = new Exam_response(submitter_id, current_exam->get_id(), current_exam->get_questions());//TODO maybe edit
     vector <Question_response>& question_responses = exam_response->question_responses;
     vector <Question*> questions = current_exam->get_questions();
     int index = 0;
@@ -58,9 +58,9 @@ Exam_response* Exam_CLI::process_exam_input(string submitter_id, Exam* current_e
 
 void Exam_CLI::display_response_data(int index, Question* question, Question_response& question_response) {
     cout << "question" << index + 1 << ": ";
-    question->print_question();
+    question->print_question(cout);
 
-    question_response.question = question; //TODO remove if exam in exam response stays
+    // question_response.question = question; //TODO remove if exam in exam response stays
 
     if (question_response.answer != "") {
         cout << "your answer: " << question_response.answer << endl;

@@ -24,6 +24,8 @@ public:
     void add_exam(int id);
 
     static Student* get_student(const std::string id);
+    Exam_response* get_exam_response_by_exam_id(int exam_id);
+    bool has_added_exam(int id);
     json to_json();
     static void from_json(json &j);
 

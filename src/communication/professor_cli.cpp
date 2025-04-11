@@ -9,7 +9,7 @@ Professor_CLI::Professor_CLI(Professor* current_professor): current_professor(cu
 
 void Professor_CLI::show_profile_page() {
     while(true) {
-        cout << "enter your request ('create'/'view'/'edit')" << endl;
+        cout << "enter your request ('create'/'view'/'edit'/'get-results'/'grade')" << endl;
         string command;
         getline(cin, command);
 
@@ -25,6 +25,12 @@ void Professor_CLI::show_profile_page() {
             }
             else if (command == "edit") {
                 edit_exam();
+            }
+            else if (command == "get-results") {
+                get_results();
+            }
+            else if (command == "grade") {
+                show_grading_page();
             }
             else {
                 throw Invalid_input_exception();
@@ -155,7 +161,7 @@ void Professor_CLI::print_exam(int id) {
 
     for (auto question : exam->get_questions()) {
         cout << "statement: ";
-        question->print_question();
+        question->print_question(cout);
         cout << "answer: " << question->get_answer() << endl;
         cout << endl;
     }
@@ -173,4 +179,63 @@ void Professor_CLI::edit_exam() {
     Exam* exam = Exam::get_exam(id);
 
     show_question_modification_page(exam);
+}
+
+void Professor_CLI::get_results() {
+    cout << "enter exam code:" << endl;
+    int id;
+    id = Tools::get_integer_input();
+
+    if (!current_professor->has_exam(id)) {
+        throw Not_found_exception();
+    }
+
+    Exam* exam = Exam::get_exam(id);
+
+    string file_path = "../user_files/ranking_professor_" + current_professor->get_id() + "_exam_" + to_string(id) + ".csv";
+    exam->get_ranking_csv(file_path);
+    cout << "ranking file is saved in: " << file_path << endl;
+}
+
+void Professor_CLI::show_grading_page() {
+    cout << "enter exam code:" << endl;
+    int id;
+    id = Tools::get_integer_input();
+
+    if (!current_professor->has_exam(id)) {
+        throw Not_found_exception();
+    }
+
+    Exam* exam = Exam::get_exam(id);
+    if (!exam->has_LA_question()) {
+        cout << "this exam doesn't have any long-answer questions!" << endl;
+        return;
+    }
+    
+    cout << "exam name: " << exam->get_name() << endl;
+    for (auto exam_response : exam->get_exam_responses()) {
+        cout << "submitter id: " << exam_response->get_submitter_id() << endl;
+        grade_response(exam_response);
+        cout << endl;
+    }
+
+    cout << "grading finished" << endl;
+}
+
+
+void Professor_CLI::grade_response(Exam_response* exam_response) {
+    for (auto& question_response : exam_response->question_responses) {
+        Question* question = question_response.question;
+        if (typeid(*question) != typeid(Long_answer))
+            continue;
+
+        question->print_question(cout);
+        cout << "correct answer: " << question_response.correct_answer << endl;
+        cout << "user answer: " << question_response.answer << endl;
+
+        cout << "enter score:" << endl;
+        int new_score;
+        new_score = Tools::get_integer_input();
+        question_response.score = new_score;
+    }
 }

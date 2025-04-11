@@ -4,14 +4,13 @@
 #include <random>
 #include <chrono>
 #include <typeinfo>
+#include <fstream>
 #include "../exceptions/not_found_exception.hpp"
 #include "../utils/tools.hpp"
 #include "long_answer.hpp"
 #include "short_answer.hpp"
 #include "four_multiple_choice.hpp"
 #include "constants.hpp"
-
-#include <iostream>
 
 std::unordered_map<int, Exam*> Exam::id_to_pointer;
 
@@ -47,6 +46,10 @@ void Exam::add_question(Question* new_question) {
     questions.push_back(new_question);
 }
 
+void Exam::add_question_response(Exam_response* response) {
+    responses.push_back(response);
+}
+
 void Exam::remove_question(int question_id) {
     if (questions.empty())
         throw Not_found_exception("questions list is empty!");
@@ -64,13 +67,34 @@ void Exam::remove_question(int question_id) {
     //TODO is it safe
 }
 
-void Exam::print_exam() {
-    cout << this->name << ":" << endl;
-
-    for (auto question : this->questions) {
-        question->print_question();
-        cout << question->get_answer() << endl;
+float Exam::calculate_average() {
+    float sum = 0;
+    int count = 0;
+    for (auto response : responses) {
+        count++;
+        sum += response->get_score();
     }
+    if (count == 0) return 0;
+    else {
+        return sum / count;
+    }
+}
+
+float Exam::get_maximum_score() {
+    float max_score = 0;
+    for (auto response : responses) {
+        max_score = max(max_score, response->get_score());
+    }
+    return max_score;
+}
+
+bool Exam::has_LA_question() {
+    for (auto question : questions) {
+        if (typeid(*question) == typeid(Long_answer)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void Exam::prepare_questions() { //reorders questions to be sorted by type, also shuffles Four multiple choice question options
@@ -96,6 +120,37 @@ void Exam::prepare_questions() { //reorders questions to be sorted by type, also
     questions.insert(questions.end(), FMC.begin(), FMC.end());
     questions.insert(questions.end(), SA.begin(), SA.end());
     questions.insert(questions.end(), LA.begin(), LA.end());
+}
+
+void Exam::print_exam() {
+    cout << this->name << ":" << endl;
+
+    for (auto question : this->questions) {
+        question->print_question(cout);
+        cout << question->get_answer() << endl;
+    }
+}
+
+void Exam::get_ranking_csv(string file_path) {
+    ofstream file(file_path);
+    file << "rank,student_id,score" << endl;
+
+    if (responses.empty()) {
+        return;
+    }
+
+    sort(responses.begin(), responses.end(), [](Exam_response* a, Exam_response* b) {
+        return a->get_score() > b->get_score();
+    });
+
+    int rank = 1;
+    for (auto response : responses) {
+        file << rank++ << "," << response->get_submitter_id() << "," << response->get_score() << endl;
+    }
+
+    file << "average," << calculate_average() << endl;
+    file << "maximum," << get_maximum_score() << endl;
+    file.close();
 }
 
 json Exam::to_json() {

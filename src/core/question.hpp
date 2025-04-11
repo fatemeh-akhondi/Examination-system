@@ -3,6 +3,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <iostream>
 #include "../../Lib/json.hpp"
 #include "instance_manager.hpp"
 
@@ -20,8 +21,10 @@ public:
     int get_id() { return id; }
 
     static Question* get_question(int id);
-    virtual void print_question() = 0;
+    virtual void print_question(std::ostream& os) = 0;
     virtual json to_json();
+
+    virtual ~Question();
 
 protected:
     int id;

@@ -9,9 +9,9 @@ Long_answer::Long_answer(int id, const std::string& text, const std::string& ans
     : Question(id, text, answer, positive_mark, question_types::LA) {}
 
 
-void Long_answer::print_question() {
-    std::cout << text << std::endl;
-    std::cout << "Positive mark: " << positive_mark << std::endl;
+void Long_answer::print_question(std::ostream& os) {
+    os << text << std::endl;
+    os << "Positive mark: " << positive_mark << std::endl;
 }
 
 json Long_answer::to_json() {

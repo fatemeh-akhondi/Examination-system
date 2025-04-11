@@ -1,0 +1,27 @@
+[
+    {
+        "course_list": [
+            "biology",
+            "chemisty",
+            "math"
+        ],
+        "exams": [
+            149947645
+        ],
+        "id": "p1",
+        "name": "fatemeh",
+        "password": "1234"
+    },
+    {
+        "course_list": [
+            "cs",
+            "ce"
+        ],
+        "exams": [
+            46058882
+        ],
+        "id": "p2",
+        "name": "piro",
+        "password": "123"
+    }
+]

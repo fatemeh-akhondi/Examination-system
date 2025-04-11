@@ -3,7 +3,6 @@
 #include "data_loader/data_loader.hpp"
 
 int main() {
-    // freopen("in.txt", "r", stdin);
     Data_loader data_loader;
     data_loader.load_all_data();
 

@@ -17,6 +17,8 @@ Question::Question(int id, const std::string& text, const std::string& answer, i
     id_to_pointer[id] = this;
 }
 
+Question::~Question(){}
+
 Question* Question::get_question(int id) {
     if (id_to_pointer.empty() || id_to_pointer.find(id) == id_to_pointer.end())
         return nullptr;

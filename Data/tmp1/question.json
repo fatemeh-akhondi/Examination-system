@@ -31,14 +31,14 @@
         "type": "four-multiple-choice"
     },
     {
-        "answer": "3",
+        "answer": "1",
         "id": 4,
         "negative_mark": 1,
         "options": [
-            "lape",
-            "bademjoon",
             "lobia",
-            "sib zamini"
+            "sib zamini",
+            "lape",
+            "bademjoon"
         ],
         "positive_mark": 2,
         "text": "gheime",

@@ -4,6 +4,7 @@
 #include "question.hpp"
 #include "../../Lib/json.hpp"
 #include <string>
+#include <iostream>
 
 using std::string;
 
@@ -15,7 +16,7 @@ public:
         int negative_mark, string opstions[4]);
 
     void shuffle_options();
-    void print_question();
+    void print_question(std::ostream& os);
     json to_json();
     static void from_json(json& j);
 

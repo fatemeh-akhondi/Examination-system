@@ -14,20 +14,27 @@ using namespace std;
 struct Question_response {
     Question* question;
     std::string answer;
+    std::string correct_answer;
+    int score;
 };
 
 class Exam_response : public Instance_manager<Exam_response> {
 public:
     vector <Question_response> question_responses;
 
-    Exam_response(string submitter_id, vector <Question*> questions);
-    Exam_response(int id, string submitter_id, float score, vector <Question_response> question_responses);
+    Exam_response(string submitter_id, int exam_id, vector <Question*> questions);
+    Exam_response(int id, string submitter_id, int exam_id, float score,
+         vector <Question_response> question_responses);
 
-    float get_score() { return score; }
+    float get_score() { calculate_score(); return score; }
     int get_id() { return id; }
+    string get_submitter_id() { return submitter_id; }
+    int get_exam_id() { return exam_id; }
 
     static Exam_response* get_exam_response(int id);
     void calculate_score();
+    void build_response_text(string file_path);
+
     json to_json();
     static void from_json(json &j);
 
@@ -36,6 +43,7 @@ private:
     static int instance_count;
     int id;
     string submitter_id;
+    int exam_id;
     float score = 0;
 };
 

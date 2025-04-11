@@ -32,6 +32,32 @@ Student* Student::get_student(string id) {
     return id_to_pointer[id];
 }
 
+Exam_response* Student::get_exam_response_by_exam_id(int exam_id) {
+    if (exam_responses.empty()) {
+        return nullptr;
+    }
+    for (auto response : exam_responses) {
+        if (response->get_exam_id() == exam_id) {
+            return response;
+        }
+    }
+    return nullptr;
+}
+
+bool Student::has_added_exam(int id) {
+    if (exams.empty()) {
+        return false;
+    }
+
+    for (auto exam : exams) {
+        if (exam->get_id() == id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+
 json Student::to_json() {
     json j = Member::to_json();
     j["study_field"] = study_field;

@@ -12,9 +12,9 @@ Short_answer::Short_answer(int id, const std::string& text, const std::string& a
     this->negative_mark = negative_mark;
 }
 
-void Short_answer::print_question() {
-    std::cout << text << std::endl;
-    std::cout << "Positive mark: " << positive_mark << " / Negative mark: " << negative_mark << std::endl;
+void Short_answer::print_question(std::ostream& os) {
+    os << text << std::endl;
+    os << "Positive mark: " << positive_mark << " / Negative mark: " << negative_mark << std::endl;
 }
 
 void Short_answer::from_json(json &j) {

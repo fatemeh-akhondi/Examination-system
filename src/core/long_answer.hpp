@@ -3,13 +3,14 @@
 
 #include "question.hpp"
 #include "../../Lib/json.hpp"
+#include <ostream>
 
 class Long_answer : public Question {
 public:
     Long_answer(const std::string& text, const std::string& answer, int positive_mark);
     Long_answer(int id, const std::string& text, const std::string& answer, int positive_mark);
 
-    void print_question();
+    void print_question(std::ostream &os);
     json to_json();
     static void from_json(json &j);
 

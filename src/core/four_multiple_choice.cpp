@@ -30,7 +30,7 @@ void Four_multiple_choice::shuffle_options() {
    int shuffled_order[4] = {1, 2, 3, 4};
    shuffle(shuffled_order, shuffled_order + 4, rng);
 
-   //rerder options according to shuffled order
+   //reorder options according to shuffled order
    string tmp[4];
    for (int i = 0; i < 4; i++) tmp[i] = options[i];
    for (int i = 0; i < 4; i++) options[i] = tmp[shuffled_order[i] - 1];
@@ -39,16 +39,17 @@ void Four_multiple_choice::shuffle_options() {
    for (int i = 0; i < 4; i++) {
        if (to_string(shuffled_order[i]) == answer) {
            answer = to_string(i + 1);
+           return;
        }
    }
 }
 
-void Four_multiple_choice::Four_multiple_choice::print_question() {
-   cout << text << endl;
+void Four_multiple_choice::Four_multiple_choice::print_question(ostream& os) {
+   os << text << endl;
    for (int i = 0; i < 4; i++) {
-       cout << i + 1 << ": " << options[i] << endl;
+       os << i + 1 << ": " << options[i] << endl;
    }
-   cout << "positive mark: " << positive_mark << " / negative mark: " << negative_mark << endl;
+   os << "Positive mark: " << positive_mark << " / Negative mark: " << negative_mark << endl;
 }
 
 json Four_multiple_choice::to_json() {
