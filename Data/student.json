@@ -12,5 +12,19 @@
         "name": "s1",
         "password": "123",
         "study_field": "bio"
+    },
+    {
+        "exam_responses": [
+            3,
+            4
+        ],
+        "exams": [
+            149947645,
+            46058882
+        ],
+        "id": "s2",
+        "name": "s2",
+        "password": "123",
+        "study_field": "cs"
     }
 ]

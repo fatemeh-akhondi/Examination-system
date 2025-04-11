@@ -48,6 +48,10 @@ void Student_CLI::add_exam_page() {
     int id;
     id = Tools::get_integer_input();
 
+    if (current_student->has_added_exam(id)) {
+        throw Exception("you have already added this exam.");
+    }
+
     current_student->add_exam(id);
     cout << "added successfully!" << endl;
 }

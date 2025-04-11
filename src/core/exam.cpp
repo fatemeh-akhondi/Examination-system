@@ -81,7 +81,7 @@ float Exam::calculate_average() {
 }
 
 float Exam::get_maximum_score() {
-    float max_score = 0;
+    float max_score = -300; //minimum score is -20, so this is a safe value
     for (auto response : responses) {
         max_score = max(max_score, response->get_score());
     }

@@ -19,7 +19,7 @@
                 1,
                 "",
                 "polymorphism abstraction encapsulation",
-                2
+                1
             ]
         ],
         "score": 20.0,
@@ -38,5 +38,45 @@
         ],
         "score": 20.0,
         "submitter_id": "s1"
+    },
+    {
+        "exam_id": 46058882,
+        "id": 3,
+        "question_responses": [
+            [
+                4,
+                "no",
+                "2",
+                1
+            ]
+        ],
+        "score": -10.0,
+        "submitter_id": "s2"
+    },
+    {
+        "exam_id": 149947645,
+        "id": 4,
+        "question_responses": [
+            [
+                3,
+                "",
+                "2",
+                0
+            ],
+            [
+                2,
+                "",
+                "3.14",
+                0
+            ],
+            [
+                1,
+                "",
+                "polymorphism abstraction encapsulation",
+                1
+            ]
+        ],
+        "score": 0.0,
+        "submitter_id": "s2"
     }
 ]

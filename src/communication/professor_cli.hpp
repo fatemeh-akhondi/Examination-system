@@ -22,7 +22,6 @@ private:
     void show_remove_question_page(Exam* current_exam);
     int show_exam_view_page();    
     void print_exam(int id);
-    void edit_exam(); 
     void get_results();
     void show_grading_page();
     void grade_response(Exam_response* exam_response);

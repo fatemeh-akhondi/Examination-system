@@ -1,5 +1,13 @@
 [
     {
+        "answer": "answer",
+        "id": 5,
+        "negative_mark": 2,
+        "positive_mark": 2,
+        "text": "short",
+        "type": "short-answer"
+    },
+    {
         "answer": "3.14",
         "id": 2,
         "negative_mark": 1,
@@ -17,28 +25,37 @@
         "type": "long-answer"
     },
     {
-        "answer": "1",
+        "answer": "a thing",
+        "id": 6,
+        "is_graded": false,
+        "negative_mark": 0,
+        "positive_mark": 5,
+        "text": "define something",
+        "type": "long-answer"
+    },
+    {
+        "answer": "2",
         "id": 3,
         "negative_mark": 1,
         "options": [
-            "most good",
-            "blue",
             "spring",
-            "dog"
+            "most good",
+            "dog",
+            "blue"
         ],
         "positive_mark": 2,
         "text": "choose best option.",
         "type": "four-multiple-choice"
     },
     {
-        "answer": "3",
+        "answer": "2",
         "id": 4,
         "negative_mark": 1,
         "options": [
-            "lape",
-            "bademjoon",
+            "sib zamini",
             "lobia",
-            "sib zamini"
+            "lape",
+            "bademjoon"
         ],
         "positive_mark": 2,
         "text": "gheime",

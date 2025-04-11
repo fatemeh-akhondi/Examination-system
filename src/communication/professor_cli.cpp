@@ -9,7 +9,7 @@ Professor_CLI::Professor_CLI(Professor* current_professor): current_professor(cu
 
 void Professor_CLI::show_profile_page() {
     while(true) {
-        cout << "enter your request ('create'/'view'/'edit'/'get-results'/'grade')" << endl;
+        cout << "enter your request ('create'/'view'/'get-results'/'grade')" << endl;
         string command;
         getline(cin, command);
 
@@ -22,9 +22,6 @@ void Professor_CLI::show_profile_page() {
             else if (command == "view") {
                 if (show_exam_view_page() == -1) //TODO use enum LOGOUT
                     return;
-            }
-            else if (command == "edit") {
-                edit_exam();
             }
             else if (command == "get-results") {
                 get_results();
@@ -165,20 +162,6 @@ void Professor_CLI::print_exam(int id) {
         cout << "answer: " << question->get_answer() << endl;
         cout << endl;
     }
-}
-
-void Professor_CLI::edit_exam() {
-    cout << "enter exam code:" << endl;
-    int id;
-    id = Tools::get_integer_input();
-
-    if (!current_professor->has_exam(id)) {
-        throw Not_found_exception();
-    }
-
-    Exam* exam = Exam::get_exam(id);
-
-    show_question_modification_page(exam);
 }
 
 void Professor_CLI::get_results() {

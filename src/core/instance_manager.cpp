@@ -1,7 +1,6 @@
 #include "instance_manager.hpp"
 #include <vector>
 
-
 #include "question.hpp"
 #include "exam.hpp"
 #include "exam_response.hpp"
