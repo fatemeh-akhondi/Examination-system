@@ -24,6 +24,7 @@ private:
     void print_exam(int id);
     void get_results();
     void show_grading_page();
+    void handle_grading_error(int id);
     void grade_response(Exam_response* exam_response);
 };
     

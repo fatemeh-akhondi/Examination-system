@@ -26,28 +26,28 @@ Question* Question_creator::create_question() {
 }
 
 void Question_creator::get_question_data(string &type, string &text, string &answer, int &positive_mark, int &negative_mark, string (&options)[4]) {
-    cout << "enter question type('short-answer(SA)'/'long-answer(LA)'/'four-multiple-choice(FMC)')" << endl;
+    cout << "Enter question type('short-answer(SA)'/'long-answer(LA)'/'four-multiple-choice(FMC)')" << endl;
     getline(cin, type);
 
-    cout << "enter question text: " << endl;
+    cout << "Enter question text: " << endl;
     getline(cin, text);
-    cout << "enter question positive mark:" << endl;
+    cout << "Enter question positive mark:" << endl;
     positive_mark = Tools::get_integer_input();
 
     get_type_specefic_data(type, negative_mark, options);
 
-    cout << "enter answer:" << endl;
+    cout << "Enter answer:" << endl;
     getline(cin, answer);
 }
 
 void Question_creator::get_type_specefic_data(string type, int &negative_mark, string (&options)[4]) { //gets type-specefic data for adding question from user
     if (type == "short-answer" || type == "SA" || type == "four-multiple-choice" || type == "FMC") {
-        cout << "enter negative mark:" << endl;
+        cout << "Enter negative mark:" << endl;
         negative_mark = Tools::get_integer_input();
     }
     if (type == "four-multiple-choice" || type == "FMC") {
         for (int i = 0; i < 4; i++) {
-            cout << "enter option " << i + 1 << ": " << endl;
+            cout << "Enter option " << i + 1 << ": " << endl;
             getline(cin, options[i]);
         }
     }

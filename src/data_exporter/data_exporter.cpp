@@ -14,18 +14,9 @@ void Data_exporter::save_data(const std::string& file_path) {
     json data_base;
     
 
-    // cout << "before exporting file" << endl;
     if (is_empty) {
         data_base = json::array();
     }
-    // else {
-    //     std::ifstream read_file(file_path); // Open file in read mode
-    //     read_file >> data_base;            // Read the JSON data
-    //     read_file.close();
-    //     if (read_file.is_open()) {
-    //         cout << "file is open " << file_path << endl;
-    //     }
-    // }
 
     //update data_basse
     ofstream file(file_path);

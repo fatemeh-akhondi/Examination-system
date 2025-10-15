@@ -8,11 +8,11 @@ using namespace std;
 
 void Authentication_CLI::show_main_page() {
     cout << "Welcome! you can enter 'logout' at anytime for returning to this page." << endl;
-    cout << "enter 'exit' in this page for finishing the program." << endl;
+    cout << "Enter 'exit' in this page for finishing the program." << endl;
     string command;
 
     while (true) {
-        cout << "what do you want to do? ('login'/'signup')" << endl;
+        cout << "What do you want to do? ('login'/'signup')" << endl;
         getline(cin, command);
 
         if (command == "exit") {
@@ -45,9 +45,9 @@ void Authentication_CLI::handle_login() {
     string role;
     getline(cin, role);
     string password, id;
-    cout << "enter your username" << endl;
+    cout << "Enter your username" << endl;
     getline(cin, id);
-    cout << "enter your password" << endl;
+    cout << "Enter your password" << endl;
     getline(cin, password);
 
     validate_login_data(role, id, password);

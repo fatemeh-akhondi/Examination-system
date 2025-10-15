@@ -63,8 +63,6 @@ void Exam::remove_question(int question_id) {
         throw Not_found_exception();
     
     questions.erase(questions.begin() + index);
-    // delete question;
-    //TODO is it safe
 }
 
 float Exam::calculate_average() {

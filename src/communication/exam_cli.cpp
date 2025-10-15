@@ -9,17 +9,17 @@ Exam_CLI::Exam_CLI(Exam* current_exam) {
 }
 
 Exam_response* Exam_CLI::hold_exam(string submitter_id) {
-    cout << "press '>' for next question and '<' for previous question and 'end' for finishing the exam" << endl;
-    cout << "you have " << current_exam->get_time_limit() << " minutes" << endl;
+    cout << "Press '>' for next question and '<' for previous question and 'end' for finishing the exam" << endl;
+    cout << "You have " << current_exam->get_time_limit() << " minutes" << endl;
 
     time_t start_time;
     time(&start_time);
 
     Exam_response *response = process_exam_input(submitter_id, current_exam, start_time);
 
-    cout << "exam finished! you have to wait for long-answer questions to get graded by professor." << endl;
+    cout << "Exam finished! you have to wait for long-answer questions to get graded by professor." << endl;
     response->calculate_score();
-    cout << "your score for this exam is: " << fixed << setprecision(2) << response->get_score() << endl;
+    cout << "Your score for this exam is: " << fixed << setprecision(2) << response->get_score() << endl;
     return response;
 }
 
@@ -60,7 +60,6 @@ void Exam_CLI::display_response_data(int index, Question* question, Question_res
     cout << "question" << index + 1 << ": ";
     question->print_question(cout);
 
-    // question_response.question = question; //TODO remove if exam in exam response stays
 
     if (question_response.answer != "") {
         cout << "your answer: " << question_response.answer << endl;
@@ -70,11 +69,11 @@ void Exam_CLI::display_response_data(int index, Question* question, Question_res
 
 bool Exam_CLI::exam_ended(time_t &start_time, string &input) {
     if (!Tools::check_time(start_time, current_exam->get_time_limit())) {
-        cout << "your exam time limit has been exceeded! exam finished!" << endl;
+        cout << "Your exam time limit has been exceeded! exam finished!" << endl;
         return 1;
     }
     if (input == "end") {
-        cout << "are you sure you want to submit the exam? ('yes'/'no')" << endl;
+        cout << "Are you sure you want to submit the exam? ('yes'/'no')" << endl;
         getline(cin, input);
         if (input == "yes") return 1;
     }

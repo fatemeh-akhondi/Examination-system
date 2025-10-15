@@ -50,7 +50,6 @@ void Data_loader::load_data(const std::string &file_path) {
 }
 
 json Data_loader::load_data_to_json(const std::string &file_path) {
-    // cout << "started loading " << file_path << endl;
     //check if the file is empty
     bool is_empty = 0;
     std::ifstream check_file(file_path);
@@ -71,7 +70,6 @@ json Data_loader::load_data_to_json(const std::string &file_path) {
     file.close();
 
 
-    // cout << "finished loading " << file_path << endl;
     return json_data;
 }
 

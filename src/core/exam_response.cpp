@@ -2,12 +2,14 @@
 #include "long_answer.hpp"
 #include <typeinfo>
 #include <fstream>
+#include <math.h>
 
 int Exam_response::instance_count = 0;
 std::unordered_map<int, Exam_response*> Exam_response::id_to_pointer;
 
 Exam_response::Exam_response(string submitter_id, int exam_id, vector <Question*> questions):
      submitter_id(submitter_id), exam_id(exam_id) {
+    instance_count = max(instance_count, id);
     id = ++instance_count;
     for (auto question : questions) {
         Question_response question_response = {question, "", question->get_answer(), 0};
@@ -21,6 +23,7 @@ Exam_response::Exam_response(int id, string submitter_id, int exam_id, float sco
     this->id = id;
     ++instance_count;
     id_to_pointer[id] = this;
+
     this->question_responses = question_responses;
     this->submitter_id = submitter_id;
     this->exam_id = exam_id;
@@ -49,8 +52,8 @@ void Exam_response::calculate_score() {
             achieved_points += response.question->get_positive_mark();
         }
         else if (user_answer != "") {
-            response.score = response.question->get_negative_mark();
-            achieved_points -= response.question->get_negative_mark();
+            response.score = -abs(response.question->get_negative_mark());
+            achieved_points -= abs(response.question->get_negative_mark());
         }
     }
 
@@ -63,15 +66,15 @@ void Exam_response::build_response_text(string file_path) {
 
     ofstream file(file_path);
     for (auto response : question_responses) {
-        file << "statement: ";
+        file << "Statement: ";
         response.question->print_question(file);
-        file << "your answer: " << response.answer << endl;
-        file << "correct answer: " << response.question->get_answer() << endl;
-        file << "score from this question: " << response.score << endl;
+        file << "Your answer: " << response.answer << endl;
+        file << "Correct answer: " << response.question->get_answer() << endl;
+        file << "Score from this question: " << response.score << endl;
         file << endl;
     }
 
-    file << "total score: " << score << endl;
+    file << "Total score: " << score << endl;
 }
 
 json Exam_response::to_json() {

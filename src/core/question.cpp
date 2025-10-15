@@ -1,10 +1,12 @@
 #include "question.hpp"
+#include <algorithm>
 
 int Question::instance_count = 0;
 std::unordered_map <int, Question*> Question::id_to_pointer;
 
 Question::Question(const std::string& text, const std::string& answer, int positive_mark, std::string type):
      text(text), answer(answer), positive_mark(positive_mark), type(type) {
+    instance_count = std::max(instance_count, id);
     id = ++instance_count;
     id_to_pointer[id] = this;
 }

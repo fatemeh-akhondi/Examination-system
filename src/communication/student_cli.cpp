@@ -9,7 +9,7 @@ Student_CLI::Student_CLI(Student* current_student) : current_student(current_stu
 
 void Student_CLI::show_profile_page() {
     while (true) {
-        cout << "enter your request('add'/'view'/'participate'/'get-results')" << endl;
+        cout << "Enter Your request('add'/'view'/'participate'/'get-results')" << endl;
         string command;
         getline(cin, command);
 
@@ -44,12 +44,12 @@ void Student_CLI::execute_command(string command) {
 }
 
 void Student_CLI::add_exam_page() {
-    cout << "enter exam code:" << endl;
+    cout << "Enter exam code:" << endl;
     int id;
     id = Tools::get_integer_input();
 
     if (current_student->has_added_exam(id)) {
-        throw Exception("you have already added this exam.");
+        throw Exception("You have already added this exam.");
     }
 
     current_student->add_exam(id);
@@ -58,7 +58,7 @@ void Student_CLI::add_exam_page() {
 
 void Student_CLI::handle_view() {
     if (current_student->get_exams().empty()) {
-        cout << "you have not added any exam yet!" << endl;
+        cout << "You have not added any exam yet!" << endl;
         return;
     }
     cout << "exam id's are: ";
@@ -69,7 +69,7 @@ void Student_CLI::handle_view() {
 }
 
 void Student_CLI::participate_page() {
-    cout << "enter exam code:" << endl;
+    cout << "Enter exam code:" << endl;
     int id;
     id = Tools::get_integer_input();
 
@@ -78,7 +78,7 @@ void Student_CLI::participate_page() {
         throw Not_found_exception("no such exam.");
     }
     if (current_student->get_exam_response_by_exam_id(id) != nullptr) {
-        throw Exception("you have already participated in this exam.");
+        throw Exception("You have already participated in this exam.");
     }
 
 
@@ -90,13 +90,13 @@ void Student_CLI::participate_page() {
 }
 
 void Student_CLI::get_results() {
-    cout << "enter exam code:" << endl;
+    cout << "Enter exam code:" << endl;
     int id;
     id = Tools::get_integer_input();
 
     Exam_response* response = current_student->get_exam_response_by_exam_id(id);
     if (response == nullptr) {
-        throw Not_found_exception("no such exam.");
+        throw Not_found_exception("No such exam.");
     }
 
     Exam* exam = Exam::get_exam(response->get_exam_id());
@@ -107,5 +107,5 @@ void Student_CLI::get_results() {
 
     string answers_file_path = "../user_files/answers_student_" + response->get_submitter_id() + "_exam_" + to_string(response->get_exam_id()) + ".txt";
     response->build_response_text(answers_file_path);  
-    cout << "the file of your answers has been saved in: " << answers_file_path << endl;
+    cout << "the file of Your answers has been saved in: " << answers_file_path << endl;
 }

@@ -9,7 +9,7 @@ Professor_CLI::Professor_CLI(Professor* current_professor): current_professor(cu
 
 void Professor_CLI::show_profile_page() {
     while(true) {
-        cout << "enter your request ('create'/'view'/'get-results'/'grade')" << endl;
+        cout << "Enter your request ('create'/'view'/'get-results'/'grade')" << endl;
         string command;
         getline(cin, command);
 
@@ -20,7 +20,7 @@ void Professor_CLI::show_profile_page() {
                 show_exam_building_page();
             }
             else if (command == "view") {
-                if (show_exam_view_page() == -1) //TODO use enum LOGOUT
+                if (show_exam_view_page() == -1)
                     return;
             }
             else if (command == "get-results") {
@@ -42,16 +42,16 @@ void Professor_CLI::show_profile_page() {
 void Professor_CLI::show_exam_building_page() {
     Exam *new_exam = build_exam();
 
-    cout << "generated unique code for this exam is: " << new_exam->get_unique_code() << endl;
+    cout << "Generated unique code for this exam is: " << new_exam->get_unique_code() << endl;
 
     show_question_modification_page(new_exam);
 }
 
 Exam* Professor_CLI::build_exam() {
-    cout << "enter exam name:" << endl;
+    cout << "Enter exam name:" << endl;
     string name;
     getline(cin, name);
-    cout << "enter exam time limit in minutes:" << endl;
+    cout << "Enter exam time limit in minutes:" << endl;
     int time_limit;
     time_limit = Tools::get_integer_input();
 
@@ -90,7 +90,7 @@ void Professor_CLI::show_add_question_page(Exam* current_exam) {
         Question_creator question_creator;
         Question* question = question_creator.create_question(); 
         current_exam->add_question(question);
-        cout << "adding successful! question id is: " << question->get_id() << endl;
+        cout << "Adding successful! question id is: " << question->get_id() << endl;
     }
     catch (Exception &e) {
         cout << e.get_message() << endl;
@@ -112,18 +112,18 @@ void Professor_CLI::show_remove_question_page(Exam* current_exam) {
 
 int Professor_CLI::show_exam_view_page() {
     if (current_professor->get_exams().empty()) {
-        cout << "you have not added any exam yet!" << endl;
+        cout << "You have not added any exam yet!" << endl;
         return 0;
     }
-    cout << "exam id's are: ";
+    cout << "Exam id's are: ";
     for (auto current_exam : current_professor->get_exams()) {
         cout << current_exam->get_id() << " ";
     }
     cout << endl;
     
     while (true) {
-        cout << "enter the exam code you want to see." << endl;
-        cout << "enter 'back' for returning to previous page." << endl;
+        cout << "Enter the exam code you want to see." << endl;
+        cout << "Enter 'back' for returning to previous page." << endl;
         string command;
         getline(cin, command);
 
@@ -147,7 +147,7 @@ int Professor_CLI::show_exam_view_page() {
 
 void Professor_CLI::print_exam(int id) {
     if (!current_professor->has_exam(id)) {
-        cout << "no such exam." << endl;
+        cout << "No such exam." << endl;
         return;
     }
 
@@ -157,52 +157,60 @@ void Professor_CLI::print_exam(int id) {
     cout << "Questions: " << endl;
 
     for (auto question : exam->get_questions()) {
-        cout << "statement: ";
+        cout << "Statement: ";
         question->print_question(cout);
-        cout << "answer: " << question->get_answer() << endl;
+        cout << "Answer: " << question->get_answer() << endl;
         cout << endl;
     }
 }
 
 void Professor_CLI::get_results() {
-    cout << "enter exam code:" << endl;
+    cout << "Enter exam code:" << endl;
     int id;
     id = Tools::get_integer_input();
 
     if (!current_professor->has_exam(id)) {
         throw Not_found_exception();
     }
-
     Exam* exam = Exam::get_exam(id);
-
+    if (exam->get_exam_responses().empty()) {
+        throw Exception("No response has been submitted yet!");
+    }
+    
     string file_path = "../user_files/ranking_professor_" + current_professor->get_id() + "_exam_" + to_string(id) + ".csv";
     exam->get_ranking_csv(file_path);
     cout << "ranking file is saved in: " << file_path << endl;
 }
 
 void Professor_CLI::show_grading_page() {
-    cout << "enter exam code:" << endl;
+    cout << "Enter exam code:" << endl;
     int id;
     id = Tools::get_integer_input();
 
+    handle_grading_error(id);
+
+    Exam* exam = Exam::get_exam(id);
+    cout << "exam name: " << exam->get_name() << endl;
+    for (auto exam_response : exam->get_exam_responses()) {
+        cout << "submitter id: " << exam_response->get_submitter_id() << endl;
+        grade_response(exam_response);
+    }
+
+    cout << "Grading finished." << endl;
+}
+
+void Professor_CLI::handle_grading_error(int id) {
     if (!current_professor->has_exam(id)) {
         throw Not_found_exception();
     }
 
     Exam* exam = Exam::get_exam(id);
     if (!exam->has_LA_question()) {
-        cout << "this exam doesn't have any long-answer questions!" << endl;
-        return;
+        throw Exception("This exam doesn't have any long-answer questions!");
     }
-    
-    cout << "exam name: " << exam->get_name() << endl;
-    for (auto exam_response : exam->get_exam_responses()) {
-        cout << "submitter id: " << exam_response->get_submitter_id() << endl;
-        grade_response(exam_response);
-        cout << endl;
+    if (exam->get_exam_responses().empty()) {
+        throw Exception("No response has been submitted yet!");
     }
-
-    cout << "grading finished" << endl;
 }
 
 
@@ -221,4 +229,5 @@ void Professor_CLI::grade_response(Exam_response* exam_response) {
         new_score = Tools::get_integer_input();
         question_response.score = new_score;
     }
+    cout << "scores for this response have been saved!" << endl;
 }
