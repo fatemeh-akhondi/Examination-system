@@ -3,8 +3,6 @@
 A console-based C++ application for managing and conducting exams.  
 Supports **student** and **professor** roles, multiple question types, grading, and CSV result export.
 
----
-
 ## Features
 
 - User authentication (students & professors)  
@@ -19,6 +17,7 @@ Supports **student** and **professor** roles, multiple question types, grading, 
 
 ## Project structure
 
+```
 ├── core/ # Core domain logic (Exam, Question, Member etc.)
 ├── communication/ # CLI interfaces for student, professor, auth
 ├── data_exporter/ # CSV export logic
@@ -26,6 +25,7 @@ Supports **student** and **professor** roles, multiple question types, grading, 
 ├── exceptions/ # Custom exception classes
 ├── utils/ # Utility helpers and common tools
 ├── main.cpp # Entry point
+```
 
 ## Build
 
